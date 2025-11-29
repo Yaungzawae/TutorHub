@@ -1,6 +1,3 @@
-DELETE FROM video_rating;
-DELETE FROM course_rating;
-DELETE FROM teacher_rating;
 DELETE FROM post_like;
 DELETE FROM post_comment;
 DELETE FROM post;
@@ -199,46 +196,25 @@ INSERT INTO post_like (student_id, post_id, created_at) VALUES
 (16,13,NOW()), (17,13,NOW()), (18,13,NOW());
 
 
+-- Course ratings
+INSERT INTO rating (student_id, target_type, target_id, stars)
+VALUES
+(1, 'course', 101, 5),
+(2, 'course', 101, 4),
+(3, 'course', 102, 5),
+(1, 'course', 103, 3);
 
-INSERT INTO teacher_rating (teacher_id, student_id, stars, created_at) VALUES
-(1,1,5,NOW()), (1,2,4,NOW()),
-(2,3,5,NOW()), (2,4,4,NOW()),
-(3,5,5,NOW()), (3,6,3,NOW()),
-(4,7,4,NOW()), (4,8,5,NOW()),
-(5,9,5,NOW()), (5,10,4,NOW()),
-(6,11,5,NOW()), (6,12,4,NOW()),
-(7,13,3,NOW()), (7,14,4,NOW()),
-(8,15,5,NOW()), (8,16,4,NOW()),
-(9,17,5,NOW()), (9,18,5,NOW()),
-(10,19,4,NOW()), (10,20,5,NOW());
+-- Teacher ratings
+INSERT INTO rating (student_id, target_type, target_id, stars)
+VALUES
+(1, 'teacher', 11, 5),
+(2, 'teacher', 11, 4),
+(3, 'teacher', 12, 5);
 
-
-
-
-INSERT INTO course_rating (student_id, course_id, stars, created_at) VALUES
-(1,1,5,NOW()), (2,1,4,NOW()),
-(3,2,5,NOW()), (4,2,4,NOW()),
-(5,3,5,NOW()), (6,3,4,NOW()),
-(7,4,4,NOW()), (8,4,5,NOW()),
-(9,5,5,NOW()), (10,5,4,NOW()),
-(11,6,4,NOW()), (12,6,5,NOW()),
-(13,7,5,NOW()), (14,7,4,NOW()),
-(15,8,4,NOW()), (16,8,5,NOW()),
-(17,9,5,NOW()), (18,9,5,NOW()),
-(19,10,4,NOW()), (20,10,5,NOW());
-
-
-
-INSERT INTO video_rating (student_id, video_id, stars, created_at) VALUES
-(1,1,5,NOW()), (2,1,4,NOW()),
-(3,2,5,NOW()), (4,2,4,NOW()),
-(5,3,5,NOW()), (6,3,4,NOW()),
-(7,4,4,NOW()), (8,4,5,NOW()),
-(9,5,5,NOW()), (10,5,4,NOW()),
-(11,6,5,NOW()), (12,6,4,NOW()),
-(13,7,5,NOW()), (14,7,3,NOW()),
-(15,8,4,NOW()), (16,8,5,NOW()),
-(17,9,5,NOW()), (18,9,4,NOW()),
-(19,10,5,NOW()), (20,10,5,NOW());
-
+-- Video ratings
+INSERT INTO rating (student_id, target_type, target_id, stars)
+VALUES
+(1, 'video', 501, 4),
+(2, 'video', 502, 5),
+(3, 'video', 503, 3);
 
