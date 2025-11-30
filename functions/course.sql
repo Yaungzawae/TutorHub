@@ -55,7 +55,7 @@ BEGIN
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION deleteCourse(
+CREATE OR REPLACE FUNCTION delete_course(
     p_course_id INTEGER
 )
 RETURNS VOID
