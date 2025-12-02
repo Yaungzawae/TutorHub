@@ -51,31 +51,6 @@ CREATE TABLE course_review (
   review TEXT
 );
 
--- Posts
-
-CREATE TABLE post (
-  id SERIAL PRIMARY KEY,
-  teacher_id INTEGER NOT NULL REFERENCES teacher(id),
-  title VARCHAR(255) NOT NULL,
-  description TEXT,
-  created_at TIMESTAMP DEFAULT NOW()
-);
-
-CREATE TABLE post_comment (
-  id SERIAL PRIMARY KEY,
-  student_id INTEGER NOT NULL REFERENCES student(id),
-  post_id INTEGER NOT NULL REFERENCES post(id) ON DELETE CASCADE,
-  comment TEXT NOT NULL,
-  created_at TIMESTAMP DEFAULT NOW()
-);
-
-CREATE TABLE post_like (
-  id SERIAL PRIMARY KEY,
-  student_id INTEGER NOT NULL REFERENCES student(id),
-  post_id INTEGER NOT NULL REFERENCES post(id) ON DELETE CASCADE,
-  created_at TIMESTAMP DEFAULT NOW(),
-  UNIQUE(student_id, post_id)
-);
 
 -- Ratings
 
