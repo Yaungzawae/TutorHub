@@ -18,25 +18,55 @@ END;
 $$;
 
 
-
+DROP FUNCTION get_course_videos_by_course_id(p_course_id INTEGER, p_student_id INTEGER);
 CREATE OR REPLACE FUNCTION get_course_videos_by_course_id(
-    p_course_id INTEGER
+    p_course_id   INTEGER,
+    p_student_id  INTEGER
 )
-RETURNS SETOF course_video
+RETURNS TABLE(
+    id INT,
+    course_id INT,
+    title VARCHAR,
+    description TEXT,
+    url VARCHAR,
+    rating NUMERIC
+)
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM course WHERE id = p_course_id) THEN
+    IF NOT EXISTS (SELECT 1 FROM course WHERE course.id = p_course_id) THEN
         RAISE EXCEPTION 'Course with id % does not exist', p_course_id;
     END IF;
 
-    RETURN QUERY
-    SELECT *
-    FROM course_video
-    WHERE course_id = p_course_id
-    ORDER BY id;
+    IF is_enrolled(p_student_id, p_course_id) THEN
+        RETURN QUERY
+        SELECT
+            cv.id,
+            cv.course_id,
+            cv.title,
+            cv.description,
+            cv.url, -- video url
+            get_video_avg_rating(cv.id)
+        FROM course_video cv
+        WHERE cv.course_id = p_course_id
+        ORDER BY cv.id;
+
+    ELSE
+        RETURN QUERY
+        SELECT
+            cv.id,
+            cv.course_id,
+            cv.title,
+            cv.description,
+            'Locked'::VARCHAR, -- hide URL
+            get_video_avg_rating(cv.id)
+        FROM course_video cv
+        WHERE cv.course_id = p_course_id
+        ORDER BY cv.id;
+    END IF;
 END;
 $$;
+
 
 
 

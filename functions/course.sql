@@ -1,18 +1,22 @@
 CREATE OR REPLACE FUNCTION create_course(
     p_title VARCHAR,
     p_description TEXT,
-    p_teacher_id INTEGER
+    p_teacher_id INTEGER,
+    p_price MONEY DEFAULT NULL,
+    p_img_url VARCHAR DEFAULT NULL
 )
 RETURNS VOID
 LANGUAGE plpgsql
 AS $$
 BEGIN
+    -- Check if teacher exists
     IF NOT EXISTS (SELECT 1 FROM teacher WHERE id = p_teacher_id) THEN
         RAISE EXCEPTION 'Teacher with id % does not exist', p_teacher_id;
     END IF;
 
-    INSERT INTO course (title, description, teacher_id)
-    VALUES (p_title, p_description, p_teacher_id);
+    -- Insert new course
+    INSERT INTO course (title, description, teacher_id, price, img_url)
+    VALUES (p_title, p_description, p_teacher_id, p_price, p_img_url);
 END;
 $$;
 
@@ -31,6 +35,37 @@ BEGIN
     SELECT *
     FROM course
     WHERE teacher_id = p_teacher_id;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION get_all_courses()
+RETURNS TABLE(
+    id INT,
+    title VARCHAR,
+    description TEXT,
+    price MONEY,
+    img_url VARCHAR,
+    teacher_name VARCHAR,
+    teacher_image VARCHAR,
+    created_at TIMESTAMP
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        c.id,
+        c.title,
+        c.description,
+        c.price,
+        c.img_url,
+        t.name,
+        t.profile_image,
+        c.created_at
+    FROM course AS c
+    JOIN teacher AS t
+    ON c.teacher_id = t.id
+    ORDER BY c.id;
 END;
 $$;
 
@@ -69,40 +104,3 @@ BEGIN
     DELETE FROM course WHERE id = p_course_id;
 END;
 $$;
-
-CREATE OR REPLACE FUNCTION enroll_student(
-    p_student_id INT,
-    p_course_id INT
-)
-RETURNS VOID
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM student WHERE id = p_student_id) THEN
-        RAISE EXCEPTION 'Student with id % does not exist', p_student_id;
-    END IF;
-
-    IF NOT EXISTS (SELECT 1 FROM course WHERE id = p_course_id) THEN
-        RAISE EXCEPTION 'Course with id % does not exist', p_course_id;
-    END IF;
-
-    IF EXISTS (
-        SELECT 1
-        FROM enrollment
-        WHERE student_id = p_student_id
-          AND course_id = p_course_id
-    ) THEN
-        RAISE EXCEPTION 'Student % is already enrolled in course %', p_student_id, p_course_id;
-    END IF;
-
-    INSERT INTO enrollment (student_id, course_id, created_at)
-    VALUES (p_student_id, p_course_id, NOW());
-END;
-$$;
-
-
-
-
-SELECT * FROM enroll_student(1, 4);
-
-SELECT * FROM update_course(2, 'AAAAA', 'world');

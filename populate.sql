@@ -1,62 +1,110 @@
-DELETE FROM post_like;
-DELETE FROM post_comment;
-DELETE FROM post;
+DELETE FROM payment;
+DELETE FROM video_rating;
+DELETE FROM teacher_rating;
+DELETE FROM course_rating;
 DELETE FROM course_review;
 DELETE FROM enrollment;
+DELETE FROM course_resource;
 DELETE FROM course_video;
 DELETE FROM course;
 DELETE FROM teacher;
 DELETE FROM student;
+DELETE FROM "user";
 
-
-INSERT INTO student (name, email, password_hash, created_at) VALUES
-('Alice Chan', 'alice.chan@example.com', 'pw1', NOW()),
-('Bob Moe', 'bob.moe@example.com', 'pw2', NOW()),
-('Charlie Win', 'charlie.win@example.com', 'pw3', NOW()),
-('David Lee', 'david.lee@example.com', 'pw4', NOW()),
-('Emily Tan', 'emily.tan@example.com', 'pw5', NOW()),
-('Frank Wong', 'frank.wong@example.com', 'pw6', NOW()),
-('Grace Lin', 'grace.lin@example.com', 'pw7', NOW()),
-('Henry Zhao', 'henry.z@example.com', 'pw8', NOW()),
-('Irene Cho', 'irene.cho@example.com', 'pw9', NOW()),
-('Jack Han', 'jack.han@example.com', 'pw10', NOW()),
-('Karen Wei', 'karen.wei@example.com', 'pw11', NOW()),
-('Leo Park', 'leo.park@example.com', 'pw12', NOW()),
-('Mia Gupta', 'mia.g@example.com', 'pw13', NOW()),
-('Nathan Ong', 'nathan.ong@example.com', 'pw14', NOW()),
-('Olivia Bo', 'olivia.bo@example.com', 'pw15', NOW()),
-('Peter Khin', 'peter.khin@example.com', 'pw16', NOW()),
-('Queenie Lang', 'queenie.lang@example.com', 'pw17', NOW()),
-('Ryan Doe', 'ryan.d@example.com', 'pw18', NOW()),
-('Samantha Lim', 'samantha.lim@example.com', 'pw19', NOW()),
-('Thomas Yee', 'thomas.yee@example.com', 'pw20', NOW());
-
-
-INSERT INTO teacher (name, email, password_hash, created_at) VALUES
-('Mr. Smith', 'smith@example.com', 'pw_t1', NOW()),
-('Ms. Tan', 'tan@example.com', 'pw_t2', NOW()),
-('Mr. Johnson', 'johnson@example.com', 'pw_t3', NOW()),
-('Ms. Patel', 'patel@example.com', 'pw_t4', NOW()),
-('Mr. Lee', 'lee@example.com', 'pw_t5', NOW()),
-('Ms. Gomez', 'gomez@example.com', 'pw_t6', NOW()),
-('Mr. Clark', 'clark@example.com', 'pw_t7', NOW()),
-('Ms. Kim', 'kim@example.com', 'pw_t8', NOW()),
-('Mr. Brown', 'brown@example.com', 'pw_t9', NOW()),
-('Ms. Park', 'park@example.com', 'pw_t10', NOW());
+ALTER sequence user_id_seq RESTART WITH 1;
+ALTER sequence course_id_seq RESTART WITH 1;
+ALTER sequence teacher_rating_id_seq RESTART WITH 1;
+ALTER sequence course_video_id_seq RESTART WITH 1;
+ALTER sequence course_rating_id_seq RESTART WITH 1;
+ALTER sequence course_review_id_seq RESTART WITH 1;
+ALTER sequence course_resource_id_seq RESTART WITH 1;
 
 
 
-INSERT INTO course (title, description, teacher_id) VALUES
-('Intro to Programming', 'Beginner-friendly coding basics.', 1),
-('Data Structures', 'Core CS foundations.', 1),
-('English Conversation', 'Improve speaking skills.', 2),
-('Calculus I', 'Differential calculus concepts.', 3),
-('Web Development', 'Build real websites.', 4),
-('Machine Learning', 'Learn ML algorithms.', 5),
-('Database Systems', 'SQL, NoSQL, indexing.', 6),
-('Cybersecurity Basics', 'Security fundamentals.', 7),
-('Mobile App Development', 'Create iOS/Android apps.', 8),
-('Creative Writing', 'Writing skills improvement.', 9);
+
+
+
+
+INSERT INTO "user" (email, password_hash, created_at) VALUES
+('alice.chan@example.com', 'pw1', NOW()),
+('bob.moe@example.com', 'pw2', NOW()),
+('charlie.win@example.com', 'pw3', NOW()),
+('david.lee@example.com', 'pw4', NOW()),
+('emily.tan@example.com', 'pw5', NOW()),
+('frank.wong@example.com', 'pw6', NOW()),
+('grace.lin@example.com', 'pw7', NOW()),
+('henry.z@example.com', 'pw8', NOW()),
+('irene.cho@example.com', 'pw9', NOW()),
+('jack.han@example.com', 'pw10', NOW()),
+('karen.wei@example.com', 'pw11', NOW()),
+('leo.park@example.com', 'pw12', NOW()),
+('mia.g@example.com', 'pw13', NOW()),
+('nathan.ong@example.com', 'pw14', NOW()),
+('olivia.bo@example.com', 'pw15', NOW()),
+('peter.khin@example.com', 'pw16', NOW()),
+('queenie.lang@example.com', 'pw17', NOW()),
+('ryan.d@example.com', 'pw18', NOW()),
+('samantha.lim@example.com', 'pw19', NOW()),
+('thomas.yee@example.com', 'pw20', NOW()),
+
+('smith@example.com',  'pw_t1', NOW()),
+('tan@example.com',    'pw_t2', NOW()),
+('johnson@example.com','pw_t3', NOW()),
+('patel@example.com',  'pw_t4', NOW()),
+('lee@example.com',    'pw_t5', NOW()),
+('gomez@example.com',  'pw_t6', NOW()),
+('clark@example.com',  'pw_t7', NOW()),
+('kim@example.com',    'pw_t8', NOW()),
+('brown@example.com',  'pw_t9', NOW()),
+('park@example.com',   'pw_t10', NOW());
+
+
+INSERT INTO student (id, name) VALUES
+(1, 'Alice Chan'),
+(2, 'Bob Moe'),
+(3, 'Charlie Win'),
+(4, 'David Lee'),
+(5, 'Emily Tan'),
+(6, 'Frank Wong'),
+(7, 'Grace Lin'),
+(8, 'Henry Zhao'),
+(9, 'Irene Cho'),
+(10, 'Jack Han'),
+(11, 'Karen Wei'),
+(12, 'Leo Park'),
+(13, 'Mia Gupta'),
+(14, 'Nathan Ong'),
+(15, 'Olivia Bo'),
+(16, 'Peter Khin'),
+(17, 'Queenie Lang'),
+(18, 'Ryan Doe'),
+(19, 'Samantha Lim'),
+(20, 'Thomas Yee');
+
+INSERT INTO teacher (id, name, title, description, profile_image) VALUES
+(21, 'Mr. Smith', 'Math Teacher', 'Experienced math instructor specializing in algebra and geometry.', 'smith.png'),
+(22, 'Ms. Tan', 'Science Teacher', 'Teaches biology and chemistry with hands-on learning.', 'tan.png'),
+(23, 'Mr. Johnson', 'English Teacher', 'Focuses on writing, grammar, and literature studies.', 'johnson.png'),
+(24, 'Ms. Patel', 'Physics Teacher', 'Expert in physics with a focus on problem-solving skills.', 'patel.png'),
+(25, 'Mr. Lee', 'Computer Science Teacher', 'Teaches programming, algorithms, and databases.', 'lee.png'),
+(26, 'Ms. Gomez', 'History Teacher', 'Specializes in world history and critical analysis.', 'gomez.png'),
+(27, 'Mr. Clark', 'Economics Teacher', 'Experienced in microeconomics and financial literacy.', 'clark.png'),
+(28, 'Ms. Kim', 'Art Teacher', 'Passionate about painting, design, and creative expression.', 'kim.png'),
+(29, 'Mr. Brown', 'Music Teacher', 'Teaches instruments, music theory, and composition.', 'brown.png'),
+(30, 'Ms. Park', 'Language Teacher', 'Specializes in teaching foreign languages with immersion.', 'park.png');
+
+
+INSERT INTO course (title, description, teacher_id, price) VALUES
+('Intro to Programming', 'Beginner-friendly coding basics.', 21, 100),
+('Data Structures', 'Core CS foundations.', 21, 200),
+('English Conversation', 'Improve speaking skills.', 22, 300),
+('Calculus I', 'Differential calculus concepts.', 23, 150),
+('Web Development', 'Build real websites.', 24, 224),
+('Machine Learning', 'Learn ML algorithms.', 25, 120),
+('Database Systems', 'SQL, NoSQL, indexing.', 26, 140),
+('Cybersecurity Basics', 'Security fundamentals.', 27, 870),
+('Mobile App Development', 'Create iOS/Android apps.', 28, 650),
+('Creative Writing', 'Writing skills improvement.', 29, 12);
 
 
 
@@ -124,97 +172,3 @@ INSERT INTO course_review (course_id, student_id, review) VALUES
 (3,11,'Very practical English exercises.'),
 (4,12,'Good explanations.'),
 (5,13,'HTML/CSS basics well taught.');
-
-
-
-
-INSERT INTO post (teacher_id, title, description) VALUES
-(1,'Welcome to Programming','Let’s start coding!'),
-(1,'Arrays vs Lists','What’s the difference?'),
-(2,'English Tips','Practice daily!'),
-(3,'Calculus Tricks','Quick derivative methods.'),
-(4,'Start Web Dev','Roadmap to web dev.'),
-(5,'ML Advice','Study math first.'),
-(6,'SQL Tips','Best SQL practices.'),
-(7,'Cybersecurity Warning','Be careful online.'),
-(8,'Mobile Dev Tips','Start with React Native.'),
-(9,'Writing Advice','Write every day.'),
-(10,'Grammar Tips','Most common mistakes.'),
-(2,'Conversation Hacks','How to sound natural.'),
-(4,'Frontend vs Backend','Which to choose?'),
-(6,'Database Indexing','Speed up your queries.'),
-(8,'iOS vs Android','Which is easier?');
-
-
-
-INSERT INTO post_comment (student_id, post_id, comment, created_at) VALUES
-(1,1,'Excited to start!',NOW()),
-(2,1,'Looks great!',NOW()),
-(3,2,'Helpful tips.',NOW()),
-(4,3,'Thanks teacher!',NOW()),
-(5,4,'Love these tricks.',NOW()),
-(6,5,'Very useful.',NOW()),
-(7,6,'Thanks for SQL tips!',NOW()),
-(8,7,'Good warning.',NOW()),
-(9,8,'Thanks!',NOW()),
-(10,9,'Very helpful.',NOW()),
-(11,10,'Great advice!',NOW()),
-(12,11,'Useful grammar points.',NOW()),
-(13,12,'This helped a lot.',NOW()),
-(14,13,'Nice explanation!',NOW()),
-(15,14,'Very technical.',NOW()),
-(16,15,'Good comparison!',NOW()),
-(17,3,'Interesting!',NOW()),
-(18,4,'Nice examples.',NOW()),
-(19,5,'Thanks for sharing.',NOW()),
-(20,6,'Wow great info.',NOW()),
-(1,7,'Good read.',NOW()),
-(2,8,'Useful content.',NOW()),
-(3,9,'Appreciate it.',NOW()),
-(4,10,'Nice post.',NOW()),
-(5,11,'Helpful advice!',NOW()),
-(6,12,'Great hacks!',NOW()),
-(7,13,'I agree!',NOW()),
-(8,14,'Very clear.',NOW()),
-(9,15,'Thanks teacher!',NOW());
-
-
-
-INSERT INTO post_like (student_id, post_id, created_at) VALUES
-(1,1,NOW()), (2,1,NOW()), (3,1,NOW()),
-(4,2,NOW()), (5,2,NOW()), (6,2,NOW()),
-(7,3,NOW()), (8,3,NOW()), (9,3,NOW()),
-(10,4,NOW()), (11,4,NOW()), (12,4,NOW()),
-(13,5,NOW()), (14,5,NOW()), (15,5,NOW()),
-(16,6,NOW()), (17,6,NOW()), (18,6,NOW()),
-(19,7,NOW()), (20,7,NOW()),
-(1,8,NOW()), (2,8,NOW()), (3,8,NOW()),
-(4,9,NOW()), (5,9,NOW()), (6,9,NOW()),
-(7,10,NOW()), (8,10,NOW()), (9,10,NOW()),
-(10,11,NOW()), (11,11,NOW()), (12,11,NOW()),
-(13,12,NOW()), (14,12,NOW()), (15,12,NOW()),
-(16,13,NOW()), (17,13,NOW()), (18,13,NOW());
-
-
--- Course ratings
-INSERT INTO rating (student_id, target_type, target_id, stars)
-VALUES
-(1, 'course', 101, 5),
-(2, 'course', 101, 4),
-(3, 'course', 102, 5),
-(1, 'course', 103, 3);
-
--- Teacher ratings
-INSERT INTO rating (student_id, target_type, target_id, stars)
-VALUES
-(1, 'teacher', 11, 5),
-(2, 'teacher', 11, 4),
-(3, 'teacher', 12, 5);
-
--- Video ratings
-INSERT INTO rating (student_id, target_type, target_id, stars)
-VALUES
-(1, 'video', 501, 4),
-(2, 'video', 502, 5),
-(3, 'video', 503, 3);
-
