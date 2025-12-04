@@ -1,5 +1,3 @@
--- DROP FUNCTION register_teacher(p_name varchar, p_email varchar, p_password varchar);
-
 CREATE OR REPLACE FUNCTION register_teacher(
     p_name VARCHAR,
     p_email VARCHAR,
@@ -28,9 +26,6 @@ BEGIN
 END;
 $$;
 
-
-
--- DROP FUNCTION login_teacher(p_email VARCHAR, p_password_hash VARCHAR);
 
 CREATE OR REPLACE FUNCTION login_teacher(
     p_email VARCHAR,
@@ -144,13 +139,3 @@ BEGIN
     WHERE id = p_teacher_id;
 END;
 $$;
-
-
-
-SELECT * from register_teacher('yza', 'yezawd22.com', 'p1234');
-SELECT * from login_teacher('yezawd22.com', 'p1234');
-
-
-SELECT * from edit_teacher_details(1,'www' ,'muicddd teacher', 'Hello World!', 'www.ww.com')
-
-SELECT * from get_teacher_detail(1);

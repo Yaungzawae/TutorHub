@@ -77,41 +77,6 @@ BEGIN
 END;
 $$;
 
-DROP FUNCTION get_courses_by_teacher_id(p_teacher_id INTEGER);
-
-CREATE OR REPLACE FUNCTION get_courses_by_teacher_id(
-    p_teacher_id INTEGER
-)
-RETURNS TABLE(
-    id INT,
-    title VARCHAR,
-    description TEXT,
-    teacher_id INT,
-    price MONEY,
-    img_url VARCHAR,
-    avg_course_rating NUMERIC
-)
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM teacher WHERE teacher.id = p_teacher_id) THEN
-        RAISE EXCEPTION 'Teacher with id % does not exist', p_teacher_id;
-    END IF;
-
-    RETURN QUERY
-    SELECT
-        c.id,
-        c.title,
-        c.description,
-        c.teacher_id,
-        c.price,
-        c.img_url,
-        get_course_avg_rating(c.id) AS avg_course_rating
-    FROM course c
-    WHERE c.teacher_id = p_teacher_id;
-END;
-$$;
-
 
 CREATE OR REPLACE FUNCTION get_video_avg_rating(
     p_video_id INT
@@ -130,8 +95,3 @@ BEGIN
     RETURN avg_rating;
 END;
 $$;
-
-
-SELECT * FROM rate_teacher(1, 21, 4);
-
-SELECT * FROM get_teacher_avg_rating(21);

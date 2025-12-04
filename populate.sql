@@ -1,23 +1,20 @@
-DELETE FROM payment;
 DELETE FROM video_rating;
 DELETE FROM teacher_rating;
 DELETE FROM course_rating;
 DELETE FROM course_review;
 DELETE FROM enrollment;
-DELETE FROM course_resource;
 DELETE FROM course_video;
 DELETE FROM course;
 DELETE FROM teacher;
 DELETE FROM student;
 DELETE FROM "user";
 
-ALTER sequence user_id_seq RESTART WITH 1;
-ALTER sequence course_id_seq RESTART WITH 1;
-ALTER sequence teacher_rating_id_seq RESTART WITH 1;
-ALTER sequence course_video_id_seq RESTART WITH 1;
-ALTER sequence course_rating_id_seq RESTART WITH 1;
-ALTER sequence course_review_id_seq RESTART WITH 1;
-ALTER sequence course_resource_id_seq RESTART WITH 1;
+ALTER SEQUENCE user_id_seq RESTART WITH 1;
+ALTER SEQUENCE course_id_seq RESTART WITH 1;
+ALTER SEQUENCE teacher_rating_id_seq RESTART WITH 1;
+ALTER SEQUENCE course_video_id_seq RESTART WITH 1;
+ALTER SEQUENCE course_rating_id_seq RESTART WITH 1;
+ALTER SEQUENCE course_review_id_seq RESTART WITH 1;
 
 
 
@@ -59,27 +56,27 @@ INSERT INTO "user" (email, password_hash, created_at) VALUES
 ('park@example.com',   'pw_t10', NOW());
 
 
-INSERT INTO student (id, name) VALUES
-(1, 'Alice Chan'),
-(2, 'Bob Moe'),
-(3, 'Charlie Win'),
-(4, 'David Lee'),
-(5, 'Emily Tan'),
-(6, 'Frank Wong'),
-(7, 'Grace Lin'),
-(8, 'Henry Zhao'),
-(9, 'Irene Cho'),
-(10, 'Jack Han'),
-(11, 'Karen Wei'),
-(12, 'Leo Park'),
-(13, 'Mia Gupta'),
-(14, 'Nathan Ong'),
-(15, 'Olivia Bo'),
-(16, 'Peter Khin'),
-(17, 'Queenie Lang'),
-(18, 'Ryan Doe'),
-(19, 'Samantha Lim'),
-(20, 'Thomas Yee');
+INSERT INTO student (id, name, profile_image) VALUES
+(1, 'Alice Chan', 'profile.img'),
+(2, 'Bob Moe', 'profile.img'),
+(3, 'Charlie Win', 'profile.img'),
+(4, 'David Lee', 'profile.img'),
+(5, 'Emily Tan', 'profile.img'),
+(6, 'Frank Wong', 'profile.img'),
+(7, 'Grace Lin', 'profile.img'),
+(8, 'Henry Zhao', 'profile.img'),
+(9, 'Irene Cho', 'profile.img'),
+(10, 'Jack Han', 'profile.img'),
+(11, 'Karen Wei', 'profile.img'),
+(12, 'Leo Park', 'profile.img'),
+(13, 'Mia Gupta', 'profile.img'),
+(14, 'Nathan Ong', 'profile.img'),
+(15, 'Olivia Bo', 'profile.img'),
+(16, 'Peter Khin', 'profile.img'),
+(17, 'Queenie Lang', 'profile.img'),
+(18, 'Ryan Doe', 'profile.img'),
+(19, 'Samantha Lim', 'profile.img'),
+(20, 'Thomas Yee', 'profile.img');
 
 INSERT INTO teacher (id, name, title, description, profile_image) VALUES
 (21, 'Mr. Smith', 'Math Teacher', 'Experienced math instructor specializing in algebra and geometry.', 'smith.png'),
@@ -94,17 +91,17 @@ INSERT INTO teacher (id, name, title, description, profile_image) VALUES
 (30, 'Ms. Park', 'Language Teacher', 'Specializes in teaching foreign languages with immersion.', 'park.png');
 
 
-INSERT INTO course (title, description, teacher_id, price) VALUES
-('Intro to Programming', 'Beginner-friendly coding basics.', 21, 100),
-('Data Structures', 'Core CS foundations.', 21, 200),
-('English Conversation', 'Improve speaking skills.', 22, 300),
-('Calculus I', 'Differential calculus concepts.', 23, 150),
-('Web Development', 'Build real websites.', 24, 224),
-('Machine Learning', 'Learn ML algorithms.', 25, 120),
-('Database Systems', 'SQL, NoSQL, indexing.', 26, 140),
-('Cybersecurity Basics', 'Security fundamentals.', 27, 870),
-('Mobile App Development', 'Create iOS/Android apps.', 28, 650),
-('Creative Writing', 'Writing skills improvement.', 29, 12);
+INSERT INTO course (title, description, teacher_id, price, img_url) VALUES
+('Intro to Programming', 'Beginner-friendly coding basics.', 21, 100, 'course.img'),
+('Data Structures', 'Core CS foundations.', 21, 200, 'course.img'),
+('English Conversation', 'Improve speaking skills.', 22, 300, 'course.img'),
+('Calculus I', 'Differential calculus concepts.', 23, 150, 'course.img'),
+('Web Development', 'Build real websites.', 24, 224, 'course.img'),
+('Machine Learning', 'Learn ML algorithms.', 25, 120, 'course.img'),
+('Database Systems', 'SQL, NoSQL, indexing.', 26, 140, 'course.img'),
+('Cybersecurity Basics', 'Security fundamentals.', 27, 870, 'course.img'),
+('Mobile App Development', 'Create iOS/Android apps.', 28, 650, 'course.img'),
+('Creative Writing', 'Writing skills improvement.', 29, 12, 'course.img');
 
 
 
@@ -172,3 +169,57 @@ INSERT INTO course_review (course_id, student_id, review) VALUES
 (3,11,'Very practical English exercises.'),
 (4,12,'Good explanations.'),
 (5,13,'HTML/CSS basics well taught.');
+
+
+
+
+INSERT INTO course_rating (student_id, course_id, stars) VALUES
+(1,1,5),(1,2,4),
+(2,3,4),
+(3,4,5),(3,5,5),
+(4,6,4),
+(5,7,5),
+(6,8,4),
+(7,9,5),
+(8,10,5),
+(9,1,4),
+(10,2,5),
+(11,3,5),
+(12,4,4),
+(13,5,5);
+
+
+
+INSERT INTO teacher_rating (student_id, teacher_id, stars) VALUES
+(1,21,5), (1,22,4),
+(2,22,4),
+(3,23,5),(3,24,5),
+(4,25,4),
+(5,26,5),
+(6,27,4),
+(7,28,5),
+(8,29,5),
+(9,21,4),
+(10,21,5),
+(11,22,5),
+(12,23,4),
+(13,24,5);
+
+
+
+INSERT INTO video_rating (student_id, video_id, stars) VALUES
+(1,1,5),
+(1,3,4),
+(2,5,4),
+(3,7,5),
+(3,9,5),
+(4,11,4),
+(5,13,5),
+(6,15,4),
+(7,17,5),
+(8,19,5),
+(9,1,4),
+(10,3,5),
+(11,5,5),
+(12,7,4),
+(13,9,5);

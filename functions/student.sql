@@ -1,5 +1,3 @@
-DROP FUNCTION register_student(p_name varchar, p_email varchar, p_password varchar);
-
 CREATE OR REPLACE FUNCTION register_student(
     p_name VARCHAR,
     p_email VARCHAR,
@@ -29,8 +27,6 @@ END;
 $$;
 
 
-
-DROP FUNCTION login_student(p_email VARCHAR, p_password_hash VARCHAR);
 
 CREATE OR REPLACE FUNCTION login_student(
     p_email VARCHAR,
@@ -102,7 +98,3 @@ BEGIN
 
 END;
 $$;
-
-
-SELECT * from register_student('yza', 'yezawd221.com', 'p1234');
-SELECT * from login_student('yezawd221.com', 'p1234');

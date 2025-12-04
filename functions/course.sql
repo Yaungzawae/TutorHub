@@ -23,20 +23,36 @@ $$;
 CREATE OR REPLACE FUNCTION get_courses_by_teacher_id(
     p_teacher_id INTEGER
 )
-RETURNS SETOF course
+RETURNS TABLE(
+    id INT,
+    title VARCHAR,
+    description TEXT,
+    teacher_id INT,
+    price MONEY,
+    img_url VARCHAR,
+    avg_course_rating NUMERIC
+)
 LANGUAGE plpgsql
 AS $$
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM teacher WHERE id = p_teacher_id) THEN
+    IF NOT EXISTS (SELECT 1 FROM teacher WHERE teacher.id = p_teacher_id) THEN
         RAISE EXCEPTION 'Teacher with id % does not exist', p_teacher_id;
     END IF;
 
     RETURN QUERY
-    SELECT *
-    FROM course
-    WHERE teacher_id = p_teacher_id;
+    SELECT
+        c.id,
+        c.title,
+        c.description,
+        c.teacher_id,
+        c.price,
+        c.img_url,
+        get_course_avg_rating(c.id) AS avg_course_rating
+    FROM course c
+    WHERE c.teacher_id = p_teacher_id;
 END;
 $$;
+
 
 CREATE OR REPLACE FUNCTION get_all_courses()
 RETURNS TABLE(

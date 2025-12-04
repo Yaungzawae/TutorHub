@@ -27,7 +27,6 @@ BEGIN
 END;
 $$;
 
-DROP FUNCTION get_course_review_by_course_id(p_course_id INT);
 CREATE OR REPLACE FUNCTION get_course_review_by_course_id(
     p_course_id INT
 )

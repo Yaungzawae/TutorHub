@@ -18,7 +18,6 @@ END;
 $$;
 
 
-DROP FUNCTION get_course_videos_by_course_id(p_course_id INTEGER, p_student_id INTEGER);
 CREATE OR REPLACE FUNCTION get_course_videos_by_course_id(
     p_course_id   INTEGER,
     p_student_id  INTEGER
